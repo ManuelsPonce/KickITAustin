@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "584508496114",
+    "firebase_url": "https://kickitaustin-67732.firebaseio.com",
+    "project_id": "kickitaustin-67732",
+    "storage_bucket": "kickitaustin-67732.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584508496114:android:bfb0cd0d0a544d6781186b",
+        "android_client_info": {
+          "package_name": "com.example.kickitaustin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584508496114-4pdcg6eavqbj400ih3ii4p3kae94mrcs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kickitaustin",
+            "certificate_hash": "9f8fdb5fbf67fce21a8af75baa350a8edd0ec264"
+          }
+        },
+        {
+          "client_id": "584508496114-0sju97olgb59gcqa7g8eku3o68d8td1o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADzsMm8D3wKaS-4X6XofS92cv0mDznBCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584508496114-0sju97olgb59gcqa7g8eku3o68d8td1o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
