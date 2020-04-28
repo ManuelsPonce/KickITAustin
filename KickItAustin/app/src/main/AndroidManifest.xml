@@ -9,13 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!--SignIn-->
-        <activity android:name=".AuthenActivity"
-            >
-        </activity>
-
-        <!--SplashScreenActivity-->
+        <activity android:name=".CreateGame"></activity>
+        <!-- SignIn -->
+        <activity android:name=".AuthenActivity"></activity> <!-- SplashScreenActivity -->
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -24,9 +20,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!--MainApp-->
+        </activity> <!-- MainApp -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

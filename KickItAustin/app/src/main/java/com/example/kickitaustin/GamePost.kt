@@ -8,7 +8,8 @@ data class GamePost  (
     var location: String,
     var body: String,
     var profilePic: String,
-    var gameOwner: String // Author of blog post
+    var gameOwner: String
+    //var numberOfPlayers
 ) {
 
 }

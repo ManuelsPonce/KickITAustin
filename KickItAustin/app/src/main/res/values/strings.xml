@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">KickItAustin</string>
+
+    <string-array name="levelOfPlayOptions">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+        <item>Professional</item>
+    </string-array>
+
+    <string-array name="locationOptions">
+        <item>Clark Field</item>
+        <item>Whitaker Complex</item>
+        <item>Gregory Gymnasium</item>
+    </string-array>
+
 </resources>
