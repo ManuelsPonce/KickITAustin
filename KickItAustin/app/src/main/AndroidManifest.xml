@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateGame"></activity>
-        <!-- SignIn -->
-        <activity android:name=".AuthenActivity"></activity> <!-- SplashScreenActivity -->
+        <activity android:name=".SpecificGameActivity"></activity>
+        <activity android:name=".CreateGame" /> <!-- SignIn -->
+        <activity android:name=".AuthenActivity" /> <!-- SplashScreenActivity -->
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">

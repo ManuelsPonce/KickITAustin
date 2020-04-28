@@ -47,8 +47,10 @@ class GameRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val profilePic = itemView.profilePicture
         val location = itemView.location
         val gameOwner = itemView.gameOwner
+        val actualStartTime = itemView.actualTime
+        val numAttending = itemView.actLevelofPlay
 
-        fun bind(blogPost: GamePost){
+        fun bind(gamePost: GamePost){
 
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
@@ -56,10 +58,13 @@ class GameRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)
-                .load(blogPost.profilePic)
+                .load(gamePost.profilePic)
                 .into(profilePic)
-            location.text = blogPost.location
-            gameOwner.text = blogPost.gameOwner
+            location.text = gamePost.location
+            gameOwner.text = gamePost.gameOwner
+            actualStartTime.text = gamePost.startTime
+            numAttending.text = gamePost.numberOfPlayers.toString()
+
 
         }
 
