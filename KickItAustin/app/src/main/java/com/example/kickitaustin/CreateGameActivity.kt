@@ -2,20 +2,23 @@ package com.example.kickitaustin
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TimePicker
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ServerTimestamp
 import kotlinx.android.synthetic.main.activity_create_game.*
-import java.text.DateFormat
-import java.time.Year
+import java.sql.RowId
+import java.sql.Timestamp
 import java.util.*
 
-class CreateGame : AppCompatActivity() {
+class CreateGameActivity : AppCompatActivity() {
 
     private lateinit var HOUR: String
     private lateinit var MINUTE: String
@@ -28,20 +31,51 @@ class CreateGame : AppCompatActivity() {
 
     private lateinit var LOPOPTION: String
     private lateinit var LOCATION: String
+    private var currentUser: FirebaseUser? = null
+
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var gamePost = MutableLiveData<List<GamePost>>()
+    //private val viewModel: MainViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_game)
 
+        currentUser = FirebaseAuth.getInstance().currentUser
+        Log.d("XXX", "NAME OF USER: " + currentUser!!.displayName)
+
         //Sets up all spinners for creating game page.
         prepareOptionsForCreate()
 
         button_create.setOnClickListener {
-            DataSource.list.add(
-                GamePost(LOCATION, "https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fwp-content%2Fblogs.dir%2F6%2Ffiles%2F2019%2F11%2Fspongebob-squarepants-spinoff-squidward-netflix-series-info-1.jpg?q=75&w=800&cbr=1&fit=max",
-                    "BOFA", STARTTIME, 1))
-            GameRecyclerAdapter().submitList(DataSource.list)
-            finish()
+            val newGamePost = GamePost().apply {
+                val cUser = currentUser
+                if (cUser == null) {
+                    gameOwner = "unknown"
+                    ownerUid = "unknown"
+                    Log.d("XXX", "XXX, currentUser null!")
+                } else {
+                    gameOwner = cUser.displayName
+                    Log.d("XXX", "NAME OF cUser: " + cUser.displayName)
+                    ownerUid = cUser.uid
+                    Log.d("XXX", "ID OF USER: " + cUser.uid)
+                }
+                location = LOCATION
+                levelOflay = LOPOPTION
+                dateOfGame = DATEOFGAME
+                Log.d("XXX", "Location of new game: " + location)
+               profilePic = null//pictureUUID
+                startTime = STARTTIME
+                Log.d("XXX", "StartTime: "+ startTime)
+                numberOfPlayers = 1
+
+            }
+
+            Log.d("XXX", "Right before should save game to database...")
+            Log.d("XXX", "New GAME: " + newGamePost.toString())
+            saveGamePostt(newGamePost)
+            //finish()
         }
         buttonCancel.setOnClickListener {
             finish()
@@ -61,6 +95,7 @@ class CreateGame : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                             LOPOPTION = levelOfPlayOption[position]
+                            Log.d("XXX", "LEVELOFPLAY: " + LOPOPTION)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -81,6 +116,7 @@ class CreateGame : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                     LOCATION = locationOption[position]
+                    Log.d("XXX", "LOCATION: " + LOCATION)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -136,4 +172,58 @@ class CreateGame : AppCompatActivity() {
             datePickerDialog.show()
         }
     }
+
+    fun saveGamePostt(gamePost: GamePost) {
+        // XXX Write me.
+        // https://firebase.google.com/docs/firestore/manage-data/add-data#add_a_document
+        // Remember to set the rowID of the chatRow before saving it
+        gamePost.rowId = db.collection("gamePost").document().id
+
+        db.collection("gamePost")
+            .document(gamePost.rowId)
+            .set(gamePost)
+            .addOnSuccessListener {
+                getGamePost()
+            }
+    }
+
+
+    fun getGamePost() {
+        if(FirebaseAuth.getInstance().currentUser == null) {
+            Log.d(javaClass.simpleName, "Can't get games, no one is logged in")
+            gamePost.value = listOf()
+            return
+        }
+        // XXX Write me.  Limit total number of chat rows to 100
+        db.collection("gamePost")
+            .limit(100)
+            .orderBy("startTime")
+            .addSnapshotListener { querySnapshot, ex ->
+                if (ex != null) {
+                    Log.w(MainActivity.TAG, "listen:error", ex)
+                    return@addSnapshotListener
+                }
+                Log.d(MainActivity.TAG, "fetch ${querySnapshot!!.documents.size}")
+                gamePost.value = querySnapshot.documents.mapNotNull {
+                    it.toObject(GamePost::class.java)
+                }
+            }
+    }
+
+    fun deleteChatRow(gamePost: GamePost){
+        // Delete picture (if any) on the server, asynchronously
+        val uuid = gamePost.profilePic
+        if(uuid != null) {
+            //Storage.deleteImage(uuid)
+        }
+        Log.d(javaClass.simpleName, "remote chatRow id: ${gamePost.rowId}")
+
+        // XXX delete chatRow
+        val gampostId = gamePost.rowId
+        db.collection("gamePost").document(gampostId).delete()
+            .addOnSuccessListener {
+                getGamePost()
+            }
+    }
+
 }

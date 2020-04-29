@@ -6,13 +6,168 @@
     android:layout_height="match_parent"
     tools:context=".SpecificGameActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+    <ImageView
+        android:layout_width="327dp"
+        android:layout_height="66dp"
+        android:background="@drawable/ic_default_monochrome"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="HELLO"/>
+        app:layout_constraintBottom_toTopOf="@id/card"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/card"
+        android:background="#CC5500">
+
+        <TextView
+            android:id="@+id/atLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location: "
+            android:textColor="#000"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="@id/time"
+            app:layout_constraintTop_toBottomOf="@id/time" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Actual Location"
+            android:textColor="#000"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/atLocation"
+            app:layout_constraintLeft_toRightOf="@id/atLocation"
+            app:layout_constraintTop_toTopOf="@id/atLocation" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Time: "
+            android:textColor="#000"
+            android:textSize="22sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/actualTime"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/actualTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time"
+            android:textColor="#000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/time"
+            app:layout_constraintLeft_toRightOf="@id/time"
+            app:layout_constraintTop_toTopOf="@id/time" />
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profilePicture"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginTop="16dp"
+            android:padding="0dp"
+            app:civ_border_color="#CC5500"
+            app:civ_border_width="3dp"
+            app:layout_constraintBottom_toTopOf="@id/gameOwner"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/time" />
+
+        <TextView
+            android:id="@+id/gameOwner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Mitch Tabian"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@id/attending"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profilePicture" />
+
+        <TextView
+            android:id="@+id/levelOfPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
+            android:text="Level of play: "
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/gameOwner"
+            app:layout_constraintTop_toBottomOf="@id/location"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="#000"/>
+
+        <TextView
+            android:id="@+id/actLevelOfPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
+            android:text="for wussy's "
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/levelOfPlay"
+            app:layout_constraintLeft_toRightOf="@id/levelOfPlay"
+            app:layout_constraintTop_toTopOf="@id/levelOfPlay"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageButton
+            android:id="@+id/addButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/attending"
+            android:background="@drawable/ic_add_circle_black_24dp"/>
+
+        <TextView
+            android:id="@+id/iWillAttend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
+            android:text="RSVP for game! "
+            android:textColor="#000"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/addButton"
+            app:layout_constraintLeft_toRightOf="@id/addButton"
+            app:layout_constraintTop_toTopOf="@id/addButton"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+        <TextView
+            android:id="@+id/attending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
+            android:text="# Attending: "
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/gameOwner"
+            app:layout_constraintTop_toBottomOf="@id/location"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:textColor="#000"/>
+
+        <TextView
+            android:id="@+id/actAttending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingRight="10dp"
+            android:text="321 "
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/attending"
+            app:layout_constraintLeft_toRightOf="@id/attending"
+            app:layout_constraintTop_toTopOf="@id/attending"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

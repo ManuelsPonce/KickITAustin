@@ -2,16 +2,17 @@ package com.example.kickitaustin
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_create_game.*
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+
+    private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private lateinit var  gameAdapter: GameRecyclerAdapter
 
     companion object {
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(authInitIntent)
 
         initRecyclerView()
-        addDataSet()
+        //addDataSet()
 
         //Create game activity
         floatingActionButton.setOnClickListener { view ->
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null)
                 .show()
 
-            startActivity(Intent(this,CreateGame::class.java))
+            startActivity(Intent(this,CreateGameActivity::class.java))
         }
     }
 
@@ -53,4 +54,5 @@ class MainActivity : AppCompatActivity() {
         val data = DataSource.createDataSet()
         gameAdapter.submitList(data)
     }
+
 }

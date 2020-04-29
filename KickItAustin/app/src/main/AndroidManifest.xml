@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SpecificGameActivity"></activity>
-        <activity android:name=".CreateGame" /> <!-- SignIn -->
+        <activity android:name=".CreateGameActivity" /> <!-- SignIn -->
         <activity android:name=".AuthenActivity" /> <!-- SplashScreenActivity -->
         <activity
             android:name=".SplashActivity"

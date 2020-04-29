@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class GameRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GameRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG: String = "AppDebug"
 
@@ -48,7 +48,7 @@ class GameRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val location = itemView.location
         val gameOwner = itemView.gameOwner
         val actualStartTime = itemView.actualTime
-        val numAttending = itemView.actLevelofPlay
+        val numAttending = itemView.actAttending
 
         fun bind(gamePost: GamePost){
 
@@ -64,7 +64,6 @@ class GameRecyclerAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             gameOwner.text = gamePost.gameOwner
             actualStartTime.text = gamePost.startTime
             numAttending.text = gamePost.numberOfPlayers.toString()
-
 
         }
 
