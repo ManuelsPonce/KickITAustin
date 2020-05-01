@@ -9,11 +9,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ServerTimestamp
 import kotlinx.android.synthetic.main.activity_create_game.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.sql.RowId
 import java.sql.Timestamp
 import java.util.*
@@ -32,6 +34,7 @@ class CreateGameActivity : AppCompatActivity() {
     private lateinit var LOPOPTION: String
     private lateinit var LOCATION: String
     private var currentUser: FirebaseUser? = null
+    private lateinit var  gameAdapter: GameRecyclerAdapter
 
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var gamePost = MutableLiveData<List<GamePost>>()
@@ -43,7 +46,7 @@ class CreateGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_game)
 
         currentUser = FirebaseAuth.getInstance().currentUser
-        Log.d("XXX", "NAME OF USER: " + currentUser!!.displayName)
+        //Log.d("XXX", "NAME OF USER: " + currentUser!!.displayName)
 
         //Sets up all spinners for creating game page.
         prepareOptionsForCreate()
@@ -54,28 +57,28 @@ class CreateGameActivity : AppCompatActivity() {
                 if (cUser == null) {
                     gameOwner = "unknown"
                     ownerUid = "unknown"
-                    Log.d("XXX", "XXX, currentUser null!")
+                    //Log.d("XXX", "XXX, currentUser null!")
                 } else {
                     gameOwner = cUser.displayName
                     Log.d("XXX", "NAME OF cUser: " + cUser.displayName)
                     ownerUid = cUser.uid
-                    Log.d("XXX", "ID OF USER: " + cUser.uid)
+                    //Log.d("XXX", "ID OF USER: " + cUser.uid)
                 }
                 location = LOCATION
                 levelOflay = LOPOPTION
                 dateOfGame = DATEOFGAME
-                Log.d("XXX", "Location of new game: " + location)
+                //Log.d("XXX", "Location of new game: " + location)
                profilePic = null//pictureUUID
                 startTime = STARTTIME
-                Log.d("XXX", "StartTime: "+ startTime)
+                //Log.d("XXX", "StartTime: "+ startTime)
                 numberOfPlayers = 1
 
             }
 
-            Log.d("XXX", "Right before should save game to database...")
-            Log.d("XXX", "New GAME: " + newGamePost.toString())
+            //Log.d("XXX", "Right before should save game to database...")
+            //Log.d("XXX", "New GAME: " + newGamePost.toString())
             saveGamePostt(newGamePost)
-            //finish()
+            finish()
         }
         buttonCancel.setOnClickListener {
             finish()
@@ -87,7 +90,7 @@ class CreateGameActivity : AppCompatActivity() {
         if(lopSpinner != null) {
             val lopAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, levelOfPlayOption)
             lopSpinner.adapter = lopAdapter
-            Log.d("XXX", "IN LOP")
+            //Log.d("XXX", "IN LOP")
             LOPOPTION = ""
 
             lopSpinner.onItemSelectedListener = object :
@@ -95,7 +98,7 @@ class CreateGameActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                             LOPOPTION = levelOfPlayOption[position]
-                            Log.d("XXX", "LEVELOFPLAY: " + LOPOPTION)
+                            //Log.d("XXX", "LEVELOFPLAY: " + LOPOPTION)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -108,7 +111,7 @@ class CreateGameActivity : AppCompatActivity() {
         if(locationSpinner != null) {
             val locationAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, locationOption)
             locationSpinner.adapter = locationAdapter
-            Log.d("XXX", "IN Loc")
+            //Log.d("XXX", "IN Loc")
             LOCATION = ""
 
             locationSpinner.onItemSelectedListener = object :
@@ -116,7 +119,7 @@ class CreateGameActivity : AppCompatActivity() {
                 override fun onItemSelected(parent: AdapterView<*>,
                                             view: View, position: Int, id: Long) {
                     LOCATION = locationOption[position]
-                    Log.d("XXX", "LOCATION: " + LOCATION)
+                    //Log.d("XXX", "LOCATION: " + LOCATION)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -142,7 +145,7 @@ class CreateGameActivity : AppCompatActivity() {
                     MINUTE = minute.toString()
                 else
                     MINUTE = "0"+minute.toString()
-                Log.d("XXX", HOUR+":"+MINUTE)
+                //Log.d("XXX", HOUR+":"+MINUTE)
                 STARTTIME = HOUR+":"+MINUTE
             }, hour, minute, false)
             timePickerDialog.show()
@@ -167,7 +170,7 @@ class CreateGameActivity : AppCompatActivity() {
                 MONTH = month.toString()
                 YEAR = year.toString()
                 DATEOFGAME = ""+month+"/"+dayOfMonth+"/"+year
-                Log.d("XXX", DATEOFGAME)
+                //Log.d("XXX", DATEOFGAME)
             }, year, month, day)
             datePickerDialog.show()
         }
@@ -197,16 +200,18 @@ class CreateGameActivity : AppCompatActivity() {
         // XXX Write me.  Limit total number of chat rows to 100
         db.collection("gamePost")
             .limit(100)
-            .orderBy("startTime")
+            //.orderBy("startTime")
             .addSnapshotListener { querySnapshot, ex ->
                 if (ex != null) {
                     Log.w(MainActivity.TAG, "listen:error", ex)
                     return@addSnapshotListener
                 }
-                Log.d(MainActivity.TAG, "fetch ${querySnapshot!!.documents.size}")
+                Log.d(MainActivity.TAG, "fetch in CreateGameActivity ${querySnapshot!!.documents.size}")
                 gamePost.value = querySnapshot.documents.mapNotNull {
                     it.toObject(GamePost::class.java)
                 }
+                Log.d("XXX",  "GamePosts fetched from gamePost.value: " + gamePost.value.toString())
+                gamePost.postValue(gamePost.value)
             }
     }
 
@@ -225,5 +230,4 @@ class CreateGameActivity : AppCompatActivity() {
                 getGamePost()
             }
     }
-
 }

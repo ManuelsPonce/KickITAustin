@@ -1,10 +1,12 @@
 package com.example.kickitaustin
 
+import com.firebase.ui.auth.AuthUI
 import java.sql.RowId
 import java.sql.Timestamp
 import com.google.firebase.firestore.ServerTimestamp
 
 data class GamePost  (
+
     var location: String? = null,
     var profilePic: String? = null, //pictureUUID
     var gameOwner: String? = null,
