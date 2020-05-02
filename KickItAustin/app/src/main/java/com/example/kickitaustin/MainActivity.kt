@@ -16,9 +16,6 @@ import androidx.lifecycle.Observer
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
-
-
-    private var firebaseAuthLiveData = FirestoreAuthLiveData()
     private lateinit var  gameAdapter: GameRecyclerAdapter
     private val viewModel: ViewModel = ViewModel()
     private var gamePost = MutableLiveData<List<GamePost>>()

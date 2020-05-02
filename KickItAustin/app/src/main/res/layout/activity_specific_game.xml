@@ -36,7 +36,7 @@
             app:layout_constraintTop_toBottomOf="@id/time" />
 
         <TextView
-            android:id="@+id/location"
+            android:id="@+id/specificLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Actual Location"
@@ -54,11 +54,11 @@
             android:textColor="#000"
             android:textSize="22sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/actualTime"
+            app:layout_constraintRight_toLeftOf="@id/specificTime"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/actualTime"
+            android:id="@+id/specificTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="time"
@@ -69,19 +69,19 @@
             app:layout_constraintTop_toTopOf="@id/time" />
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profilePicture"
+            android:id="@+id/specificProfilePicture"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_marginTop="16dp"
             android:padding="0dp"
             app:civ_border_color="#CC5500"
             app:civ_border_width="3dp"
-            app:layout_constraintBottom_toTopOf="@id/gameOwner"
+            app:layout_constraintBottom_toTopOf="@id/specificGameOwner"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/time" />
 
         <TextView
-            android:id="@+id/gameOwner"
+            android:id="@+id/specificGameOwner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -90,7 +90,15 @@
             android:textSize="22sp"
             app:layout_constraintBottom_toTopOf="@id/attending"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profilePicture" />
+            app:layout_constraintTop_toBottomOf="@id/specificProfilePicture" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/goBackBut"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Go back"/>
 
         <TextView
             android:id="@+id/levelOfPlay"
@@ -100,19 +108,19 @@
             android:paddingRight="10dp"
             android:text="Level of play: "
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/gameOwner"
-            app:layout_constraintTop_toBottomOf="@id/location"
+            app:layout_constraintBottom_toBottomOf="@id/specificGameOwner"
+            app:layout_constraintTop_toBottomOf="@id/specificLocation"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="#000"/>
 
         <TextView
-            android:id="@+id/actLevelOfPlay"
+            android:id="@+id/specificLOP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingRight="10dp"
             android:text="for wussy's "
-            android:textSize="12sp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/levelOfPlay"
             app:layout_constraintLeft_toRightOf="@id/levelOfPlay"
             app:layout_constraintTop_toTopOf="@id/levelOfPlay"
@@ -150,19 +158,19 @@
             android:paddingRight="10dp"
             android:text="# Attending: "
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/gameOwner"
-            app:layout_constraintTop_toBottomOf="@id/location"
+            app:layout_constraintBottom_toBottomOf="@id/specificGameOwner"
+            app:layout_constraintTop_toBottomOf="@id/specificLocation"
             app:layout_constraintLeft_toLeftOf="parent"
             android:textColor="#000"/>
 
         <TextView
-            android:id="@+id/actAttending"
+            android:id="@+id/specificAttending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingRight="10dp"
             android:text="321 "
-            android:textSize="12sp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/attending"
             app:layout_constraintLeft_toRightOf="@id/attending"
             app:layout_constraintTop_toTopOf="@id/attending"

@@ -12,7 +12,14 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_specific_game.view.*
 import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.list_item.view.actAttending
+import kotlinx.android.synthetic.main.list_item.view.actualTime
+import kotlinx.android.synthetic.main.list_item.view.gameOwner
+import kotlinx.android.synthetic.main.list_item.view.location
+import kotlinx.android.synthetic.main.list_item.view.profilePicture
 
 class GameRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -59,11 +66,17 @@ class GameRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 //                )
         (holder as GameViewHolder).bind(items[position])
         holder.itemView.setOnClickListener {
+//            Snackbar.make(it, "Clicked on item: " + position.toString(), Snackbar.LENGTH_LONG)
+//                .setAction("Action", null)
+//                .show()
+
             //SpecificGame Activity
-            val specificGameIntent = Intent(it.getContext(), AuthenActivity::class.java).apply {
-                putExtra("", "")
-            }
-            it.context.startActivity(specificGameIntent)
+            val specificGameIntent = Intent(it.context, SpecificGameActivity::class.java)
+            specificGameIntent.putExtra("gamePost", items[position])
+
+            Log.d("XXX", "extras right before starting act: " + specificGameIntent.extras.toString())
+
+           it.context.startActivity(specificGameIntent)
         }
 
 //            }

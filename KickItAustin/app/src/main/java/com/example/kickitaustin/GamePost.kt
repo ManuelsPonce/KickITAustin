@@ -1,11 +1,8 @@
 package com.example.kickitaustin
 
-import com.firebase.ui.auth.AuthUI
-import java.sql.RowId
-import java.sql.Timestamp
-import com.google.firebase.firestore.ServerTimestamp
+import java.io.Serializable
 
-data class GamePost  (
+data class GamePost (
 
     var location: String? = null,
     var profilePic: String? = null, //pictureUUID
@@ -19,6 +16,6 @@ data class GamePost  (
     var rowId: String = "",
     var ownerUid: String? = null
    // @ServerTimestamp val timeStamp: Timestamp? = null
-    ) {
+    ) : Serializable{
 
 }
