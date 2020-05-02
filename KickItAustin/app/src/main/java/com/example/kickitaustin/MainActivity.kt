@@ -37,11 +37,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(authInitIntent)
 
         initRecyclerView()
-        addDataSet()
+        //addDataSet()
 
         db.collection("gamePost")
             .limit(100)
-            //.orderBy("startTime")
+            .orderBy("startTime")
             .addSnapshotListener { querySnapshot, ex ->
                 if (ex != null) {
                     Log.w(MainActivity.TAG, "listen:error", ex)
@@ -53,13 +53,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 Log.d("XXX",  "List in main activyty: " + gamePost.value.toString())
                 gameAdapter.submitList(gamePost.value!!)
-                //addDataSet(gamePost.value!!)
+                gameAdapter.notifyDataSetChanged()
+                //Log.d("XXX", "THE FUCKING LislT in adaptor: " + gameAdapter)
             }
 
             viewModel.observeData().observe(this, Observer {
                 Log.d("XXX", "Observe GamePost $it")
                 gameAdapter.submitList(it)
-                //addDataSet(it)
+                gameAdapter.notifyDataSetChanged()
             })
 
         //Create game activity
@@ -86,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         //val data = DataSource.createDataSet(gameList)
         val dataTwo = DataSource.createDataSetTwo()
         gameAdapter.submitList(dataTwo)
+        //gameAdapter.notifyDataSetChanged()
     }
 
 }

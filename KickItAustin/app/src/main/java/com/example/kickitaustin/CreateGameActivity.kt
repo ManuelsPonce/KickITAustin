@@ -68,7 +68,7 @@ class CreateGameActivity : AppCompatActivity() {
                 levelOflay = LOPOPTION
                 dateOfGame = DATEOFGAME
                 //Log.d("XXX", "Location of new game: " + location)
-               profilePic = null//pictureUUID
+               profilePic = "https://picsum.photos/200"//pictureUUID
                 startTime = STARTTIME
                 //Log.d("XXX", "StartTime: "+ startTime)
                 numberOfPlayers = 1
@@ -200,7 +200,7 @@ class CreateGameActivity : AppCompatActivity() {
         // XXX Write me.  Limit total number of chat rows to 100
         db.collection("gamePost")
             .limit(100)
-            //.orderBy("startTime")
+            .orderBy("dateOfGame")
             .addSnapshotListener { querySnapshot, ex ->
                 if (ex != null) {
                     Log.w(MainActivity.TAG, "listen:error", ex)

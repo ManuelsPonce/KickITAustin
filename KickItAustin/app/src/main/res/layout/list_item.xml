@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingRight="10dp"
-            android:text="Mitch Tabian"
+            android:text=""
             android:textSize="22sp"
             app:layout_constraintBottom_toTopOf="@id/attending"
             app:layout_constraintRight_toRightOf="parent"
