@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,11 +35,11 @@ class CreateGameActivity : AppCompatActivity() {
     private lateinit var LOPOPTION: String
     private lateinit var LOCATION: String
     private var currentUser: FirebaseUser? = null
-    private lateinit var  gameAdapter: GameRecyclerAdapter
 
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var gamePost = MutableLiveData<List<GamePost>>()
     //private val viewModel: MainViewModel by viewModels()
+    private val times = arrayOf("12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "1", "2","3", "4", "5", "6", "7", "8", "9", "10", "11")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,33 +53,44 @@ class CreateGameActivity : AppCompatActivity() {
         prepareOptionsForCreate()
 
         button_create.setOnClickListener {
-            val newGamePost = GamePost().apply {
-                val cUser = currentUser
-                if (cUser == null) {
-                    gameOwner = "unknown"
-                    ownerUid = "unknown"
-                    //Log.d("XXX", "XXX, currentUser null!")
-                } else {
-                    gameOwner = cUser.displayName
-                    Log.d("XXX", "NAME OF cUser: " + cUser.displayName)
-                    ownerUid = cUser.uid
-                    //Log.d("XXX", "ID OF USER: " + cUser.uid)
+            if(STARTTIME != "" && DATEOFGAME != "") {
+                val newGamePost = GamePost().apply {
+                    val cUser = currentUser
+                    if (cUser == null) {
+                        gameOwner = "unknown"
+                        ownerUid = "unknown"
+                        //Log.d("XXX", "XXX, currentUser null!")
+                    } else {
+                        gameOwner = cUser.displayName
+                        Log.d("XXX", "NAME OF cUser: " + cUser.displayName)
+                        ownerUid = cUser.uid
+                        //Log.d("XXX", "ID OF USER: " + cUser.uid)
+                    }
+                    location = LOCATION
+                    levelOflay = LOPOPTION
+                    dateOfGame = DATEOFGAME
+                    //Log.d("XXX", "Location of new game: " + location)
+//                Log.d("XXX", "profile pic from create game activity: " + cUser!!.photoUrl.toString())
+                    profilePic = cUser!!.photoUrl.toString()//pictureUUID
+                    //profilePic = cUser!!.photoUrl.toString()//pictureUUID
+                    startTime = STARTTIME
+                    //Log.d("XXX", "StartTime: "+ startTime)
+                    numberOfPlayers = 1
+                    listOfAttendents = arrayListOf()
+                    listOfAttendents!!.add(cUser.toString())
+
                 }
-                location = LOCATION
-                levelOflay = LOPOPTION
-                dateOfGame = DATEOFGAME
-                //Log.d("XXX", "Location of new game: " + location)
-               profilePic = "https://picsum.photos/200"//pictureUUID
-                startTime = STARTTIME
-                //Log.d("XXX", "StartTime: "+ startTime)
-                numberOfPlayers = 1
 
+                //Log.d("XXX", "Right before should save game to database...")
+                //Log.d("XXX", "New GAME: " + newGamePost.toString())
+                saveGamePostt(newGamePost)
+                finish()
             }
-
-            //Log.d("XXX", "Right before should save game to database...")
-            //Log.d("XXX", "New GAME: " + newGamePost.toString())
-            saveGamePostt(newGamePost)
-            finish()
+            else {
+                Snackbar.make(it, "PLEASE CHOOSE A TIME AND DATE FOR YOUR GAME", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .show()
+            }
         }
         buttonCancel.setOnClickListener {
             finish()
@@ -141,17 +153,22 @@ class CreateGameActivity : AppCompatActivity() {
             val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                 //set time
                 HOUR = hourOfDay.toString()
+
                 if(minute.toString().length > 1)
                     MINUTE = minute.toString()
                 else
                     MINUTE = "0"+minute.toString()
                 //Log.d("XXX", HOUR+":"+MINUTE)
-                STARTTIME = HOUR+":"+MINUTE
+                //Log.d("XXX", times[hourOfDay])
+                if(HOUR.toInt() < 12 )
+                    STARTTIME = times[hourOfDay]+":"+MINUTE+"AM"
+                else
+                    STARTTIME = times[hourOfDay]+":"+MINUTE+"PM"
+
+                timePicked.text = STARTTIME
             }, hour, minute, false)
             timePickerDialog.show()
         }
-
-
 
         DAY = ""
         MONTH = ""
@@ -170,6 +187,7 @@ class CreateGameActivity : AppCompatActivity() {
                 MONTH = month.toString()
                 YEAR = year.toString()
                 DATEOFGAME = ""+month+"/"+dayOfMonth+"/"+year
+                datePicked.text = DATEOFGAME
                 //Log.d("XXX", DATEOFGAME)
             }, year, month, day)
             datePickerDialog.show()
@@ -200,7 +218,7 @@ class CreateGameActivity : AppCompatActivity() {
         // XXX Write me.  Limit total number of chat rows to 100
         db.collection("gamePost")
             .limit(100)
-            .orderBy("dateOfGame")
+            .orderBy("startTime")
             .addSnapshotListener { querySnapshot, ex ->
                 if (ex != null) {
                     Log.w(MainActivity.TAG, "listen:error", ex)
@@ -210,24 +228,8 @@ class CreateGameActivity : AppCompatActivity() {
                 gamePost.value = querySnapshot.documents.mapNotNull {
                     it.toObject(GamePost::class.java)
                 }
-                Log.d("XXX",  "GamePosts fetched from gamePost.value: " + gamePost.value.toString())
+//                Log.d("XXX",  "GamePosts fetched from gamePost.value: " + gamePost.value.toString())
                 gamePost.postValue(gamePost.value)
-            }
-    }
-
-    fun deleteChatRow(gamePost: GamePost){
-        // Delete picture (if any) on the server, asynchronously
-        val uuid = gamePost.profilePic
-        if(uuid != null) {
-            //Storage.deleteImage(uuid)
-        }
-        Log.d(javaClass.simpleName, "remote chatRow id: ${gamePost.rowId}")
-
-        // XXX delete chatRow
-        val gampostId = gamePost.rowId
-        db.collection("gamePost").document(gampostId).delete()
-            .addOnSuccessListener {
-                getGamePost()
             }
     }
 }

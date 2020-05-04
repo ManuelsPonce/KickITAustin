@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 gamePost.value = querySnapshot.documents.mapNotNull {
                     it.toObject(GamePost::class.java)
                 }
-                Log.d("XXX",  "List in main activyty: " + gamePost.value.toString())
+                //Log.d("XXX",  "List in main activyty: " + gamePost.value.toString())
                 gameAdapter.submitList(gamePost.value!!)
                 gameAdapter.notifyDataSetChanged()
                 //Log.d("XXX", "THE FUCKING LislT in adaptor: " + gameAdapter)
@@ -62,9 +62,9 @@ class MainActivity : AppCompatActivity() {
 
         //Create game activity
         floatingActionButton.setOnClickListener { view ->
-            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+//            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null)
+//                .show()
 
             startActivity(Intent(this,CreateGameActivity::class.java))
         }
@@ -80,11 +80,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addDataSet(/*gameList: List<GamePost>*/){
-        //val data = DataSource.createDataSet(gameList)
-        val dataTwo = DataSource.createDataSetTwo()
-        gameAdapter.submitList(dataTwo)
-        //gameAdapter.notifyDataSetChanged()
-    }
+//    private fun addDataSet(/*gameList: List<GamePost>*/){
+//        //val data = DataSource.createDataSet(gameList)
+//        //val dataTwo = DataSource.createDataSetTwo()
+//        //gameAdapter.submitList(dataTwo)
+//        //gameAdapter.notifyDataSetChanged()
+//    }
 
 }

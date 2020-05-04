@@ -11,6 +11,7 @@ data class GamePost (
     var numberOfPlayers: Int? = null,
     var levelOflay: String? = null,
     var dateOfGame:String? = null,
+    var listOfAttendents: MutableList<String>? = null,
 
     //firebase stuff
     var rowId: String = "",

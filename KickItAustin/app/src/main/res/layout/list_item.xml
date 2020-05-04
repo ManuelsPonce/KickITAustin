@@ -87,7 +87,8 @@
             android:layout_marginTop="10dp"
             android:paddingRight="10dp"
             android:text="# Attending: "
-            android:textSize="14sp"
+            android:textSize="18sp"
+            android:textColor="#000"
             app:layout_constraintBottom_toBottomOf="@id/gameOwner"
             app:layout_constraintTop_toBottomOf="@id/location"
             app:layout_constraintLeft_toLeftOf="parent" />
@@ -99,20 +100,29 @@
             android:layout_marginTop="10dp"
             android:paddingRight="10dp"
             android:text="321 "
-            android:textSize="12sp"
+            android:textColor="#000"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/attending"
             app:layout_constraintLeft_toRightOf="@id/attending"
             app:layout_constraintTop_toTopOf="@id/attending"
             app:layout_constraintVertical_bias="1.0" />
 
-        <ImageView
+<!--        <ImageView-->
+<!--            android:id="@+id/moreBut"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/attending"-->
+<!--            android:src="@drawable/ic_more_horiz_black_24dp"/>-->
+        <TextView
             android:id="@+id/moreBut"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/attending"
-            android:src="@drawable/ic_more_horiz_black_24dp"/>
+            android:text="Tap for more info!"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,12 +2,17 @@ package com.example.kickitaustin
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kickitaustin.temporaryPictures.Companion.picList
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+import java.util.concurrent.ThreadLocalRandom
+import kotlin.random.Random
 
 class AuthenActivity : AppCompatActivity() {
     companion object {
@@ -20,6 +25,8 @@ class AuthenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var picListSize = picList.size
+        val randomNum = Random.nextInt(0, picListSize)
 
         //Authentication
         if (FirebaseAuth.getInstance().currentUser == null) {
@@ -37,6 +44,22 @@ class AuthenActivity : AppCompatActivity() {
                     .build(),
                 rcSignIn
             )
+        }
+
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user!!.photoUrl == null) {
+//            Log.d("XXX", "URI of current user: " + user.photoUrl.toString())
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setPhotoUri(picList[randomNum])
+                .build()
+
+            user?.updateProfile(profileUpdates)
+                ?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        //Log.d("XXX", "User profile updated.")
+                        //Log.d("XXX", "URI of current user: " + user.photoUrl.toString())
+                    }
+                }
         }
         finish()
     }

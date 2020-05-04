@@ -74,7 +74,7 @@ class GameRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val specificGameIntent = Intent(it.context, SpecificGameActivity::class.java)
             specificGameIntent.putExtra("gamePost", items[position])
 
-            Log.d("XXX", "extras right before starting act: " + specificGameIntent.extras.toString())
+            //Log.d("XXX", "extras right before starting act: " + specificGameIntent.extras.toString())
 
            it.context.startActivity(specificGameIntent)
         }

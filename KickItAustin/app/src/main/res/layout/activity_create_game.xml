@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".CreateGameActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create a Pickup Game!"
+        android:textColor="#CC5500"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@id/locPosition"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <LinearLayout
         android:id="@+id/locPosition"
         android:layout_width="wrap_content"
@@ -14,7 +26,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#CC5500">
         <TextView
             android:id="@+id/Location"
             android:layout_width="wrap_content"
@@ -56,11 +69,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pick Start Time" />
+
+        <TextView
+            android:id="@+id/timePicked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="20sp"/>
+
         <Button
             android:id="@+id/datePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pick date of game" />
+        <TextView
+            android:id="@+id/datePicked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 

@@ -10,20 +10,22 @@
         android:layout_width="327dp"
         android:layout_height="66dp"
         android:background="@drawable/ic_default_monochrome"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/card"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#CC5500"
         android:padding="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/card"
-        android:background="#CC5500">
+        app:layout_constraintVertical_bias="0.499">
 
         <TextView
             android:id="@+id/atLocation"
@@ -45,6 +47,27 @@
             app:layout_constraintBottom_toBottomOf="@id/atLocation"
             app:layout_constraintLeft_toRightOf="@id/atLocation"
             app:layout_constraintTop_toTopOf="@id/atLocation" />
+
+        <TextView
+            android:id="@+id/dateOfGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:textColor="#000"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="@id/atLocation"
+            app:layout_constraintTop_toBottomOf="@id/atLocation" />
+
+        <TextView
+            android:id="@+id/specificDOG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Actual date"
+            android:textColor="#000"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/dateOfGame"
+            app:layout_constraintLeft_toRightOf="@id/dateOfGame"
+            app:layout_constraintTop_toTopOf="@id/dateOfGame" />
 
         <TextView
             android:id="@+id/time"
@@ -93,12 +116,12 @@
             app:layout_constraintTop_toBottomOf="@id/specificProfilePicture" />
 
         <Button
+            android:id="@+id/goBackBut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/goBackBut"
-            app:layout_constraintRight_toRightOf="parent"
+            android:text="Go back"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Go back"/>
+            app:layout_constraintRight_toRightOf="parent" />
 
         <TextView
             android:id="@+id/levelOfPlay"
@@ -107,11 +130,11 @@
             android:layout_marginTop="10dp"
             android:paddingRight="10dp"
             android:text="Level of play: "
+            android:textColor="#000"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/specificGameOwner"
-            app:layout_constraintTop_toBottomOf="@id/specificLocation"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:textColor="#000"/>
+            app:layout_constraintTop_toBottomOf="@id/specificLocation" />
 
         <TextView
             android:id="@+id/specificLOP"
@@ -130,10 +153,10 @@
             android:id="@+id/addButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:background="@drawable/ic_add_circle_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/attending"
-            android:background="@drawable/ic_add_circle_black_24dp"/>
+            app:layout_constraintTop_toBottomOf="@id/attending" />
 
         <TextView
             android:id="@+id/iWillAttend"
@@ -141,7 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:paddingRight="10dp"
-            android:text="RSVP for game! "
+            android:text="RSVP for game!"
             android:textColor="#000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/addButton"
@@ -157,11 +180,11 @@
             android:layout_marginTop="10dp"
             android:paddingRight="10dp"
             android:text="# Attending: "
+            android:textColor="#000"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/specificGameOwner"
-            app:layout_constraintTop_toBottomOf="@id/specificLocation"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:textColor="#000"/>
+            app:layout_constraintTop_toBottomOf="@id/specificLocation" />
 
         <TextView
             android:id="@+id/specificAttending"
@@ -177,5 +200,13 @@
             app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/deleteButt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DELETE GAME POST"
+        app:layout_constraintTop_toBottomOf="@id/card"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
