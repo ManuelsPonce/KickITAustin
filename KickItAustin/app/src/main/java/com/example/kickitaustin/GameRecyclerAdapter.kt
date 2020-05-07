@@ -66,7 +66,7 @@ class GameRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 //                )
         (holder as GameViewHolder).bind(items[position])
         holder.itemView.setOnClickListener {
-//            Snackbar.make(it, "Clicked on item: " + position.toString(), Snackbar.LENGTH_LONG)
+//            Snackbar.make(it, "Clicked on item: " + position.toStrireddng(), Snackbar.LENGTH_LONG)
 //                .setAction("Action", null)
 //                .show()
 

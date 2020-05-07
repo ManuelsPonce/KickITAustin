@@ -44,22 +44,22 @@ class AuthenActivity : AppCompatActivity() {
                     .build(),
                 rcSignIn
             )
-        }
 
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user!!.photoUrl == null) {
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user!!.photoUrl == null) {
 //            Log.d("XXX", "URI of current user: " + user.photoUrl.toString())
-            val profileUpdates = UserProfileChangeRequest.Builder()
-                .setPhotoUri(picList[randomNum])
-                .build()
+                val profileUpdates = UserProfileChangeRequest.Builder()
+                    .setPhotoUri(picList[randomNum])
+                    .build()
 
-            user?.updateProfile(profileUpdates)
-                ?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        //Log.d("XXX", "User profile updated.")
-                        //Log.d("XXX", "URI of current user: " + user.photoUrl.toString())
+                user?.updateProfile(profileUpdates)
+                    ?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            //Log.d("XXX", "User profile updated.")
+                            //Log.d("XXX", "URI of current user: " + user.photoUrl.toString())
+                        }
                     }
-                }
+            }
         }
         finish()
     }

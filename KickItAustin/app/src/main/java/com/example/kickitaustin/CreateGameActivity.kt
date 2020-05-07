@@ -87,7 +87,7 @@ class CreateGameActivity : AppCompatActivity() {
                 finish()
             }
             else {
-                Snackbar.make(it, "PLEASE CHOOSE A TIME AND DATE FOR YOUR GAME", Snackbar.LENGTH_LONG)
+                Snackbar.make(it, "Please choose a date and time!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null)
                     .show()
             }

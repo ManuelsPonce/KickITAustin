@@ -5,14 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 import androidx.lifecycle.Observer
+import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.auth.api.Auth
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
         //Authentication Activity
         val authInitIntent = Intent(this, AuthenActivity::class.java)
@@ -35,6 +39,13 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerView()
         //addDataSet()
+
+        logoutButt.setOnClickListener {
+            AuthUI.getInstance().signOut(this).addOnSuccessListener {
+                val authInitIntent = Intent(this, AuthenActivity::class.java)
+                startActivity(authInitIntent)
+            }
+        }
 
         db.collection("gamePost")
             .limit(100)
