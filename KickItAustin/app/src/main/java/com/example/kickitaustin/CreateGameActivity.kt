@@ -79,6 +79,9 @@ class CreateGameActivity : AppCompatActivity() {
                     listOfAttendents = arrayListOf()
                     listOfAttendents!!.add(cUser.toString())
 
+                    listOfTextChats = arrayListOf()
+                    //val textChats = TextChats(cUser.displayName, "Hello welcome to the chat!", cUser.uid)
+                    listOfTextChats!!.add("Hello welcome to the chat!")
                 }
 
                 //Log.d("XXX", "Right before should save game to database...")

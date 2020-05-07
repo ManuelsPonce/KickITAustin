@@ -1,12 +1,14 @@
 import androidx.lifecycle.*
 import androidx.lifecycle.ViewModel
 import com.example.kickitaustin.GamePost
+import com.example.kickitaustin.TextChats
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ViewModel : ViewModel() {
     private var data = MutableLiveData<List<GamePost>>()
+    private var textChats = MutableLiveData<List<String>>()
 //    fun updateData(gamePost: GamePost) {
 //        // Please add one line to this function (where indicated), leaving the rest
 //        // of the code unchanged.
@@ -31,5 +33,10 @@ class ViewModel : ViewModel() {
     fun observeData(): LiveData<List<GamePost>> {
         // XXX Write me (one liner)
         return data
+    }
+
+    fun observeTexts(): LiveData<List<String>> {
+        // XXX Write me (one liner)
+        return textChats
     }
 }

@@ -25,8 +25,6 @@ class AuthenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var picListSize = picList.size
-        val randomNum = Random.nextInt(0, picListSize)
 
         //Authentication
         if (FirebaseAuth.getInstance().currentUser == null) {
@@ -44,8 +42,12 @@ class AuthenActivity : AppCompatActivity() {
                     .build(),
                 rcSignIn
             )
+        }
 
+        if(FirebaseAuth.getInstance().currentUser != null) {
             val user = FirebaseAuth.getInstance().currentUser
+            var picListSize = picList.size
+            val randomNum = Random.nextInt(0, picListSize)
             if (user!!.photoUrl == null) {
 //            Log.d("XXX", "URI of current user: " + user.photoUrl.toString())
                 val profileUpdates = UserProfileChangeRequest.Builder()
@@ -57,6 +59,9 @@ class AuthenActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             //Log.d("XXX", "User profile updated.")
                             //Log.d("XXX", "URI of current user: " + user.photoUrl.toString())
+                        }
+                        else {
+                            Log.d("xxx","failed to give them a profile picture!")
                         }
                     }
             }

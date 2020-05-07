@@ -1,5 +1,6 @@
 package com.example.kickitaustin
 
+import ViewModel
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -7,18 +8,24 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_specific_game.*
 import kotlinx.android.synthetic.main.list_item.*
 
 class SpecificGameActivity : AppCompatActivity() {
 
+    private val viewModel: ViewModel = ViewModel()
     val firebaseAuthInstance = FirebaseAuth.getInstance()
     val currentUser = firebaseAuthInstance.currentUser
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private lateinit var  chatAdapter: chatAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +85,40 @@ class SpecificGameActivity : AppCompatActivity() {
             }
         }
 
+        //Chat stuff
+        initRecyclerView(gamePost)
+        chatAdapter.submitList(gamePost!!.listOfTextChats!!.toList())
+        chatAdapter.notifyDataSetChanged()
+
+        viewModel.observeTexts().observe(this, Observer {
+            Log.d("XXX", "Observe GamePost $it")
+            chatAdapter.submitList(it)
+            chatAdapter.notifyDataSetChanged()
+        })
+
+        composeSendIB.setOnClickListener {
+            if(composeMessageET.text.isNotEmpty()) {
+//                val textChat = TextChats().apply {
+//                    message = composeMessageET.text.toString()
+//                    ownerUid = currentUser.uid
+//                    gameOwner = currentUser.displayName
+//                }
+                val message = composeMessageET.text.toString()
+                if (message.contains("@")) {
+                    Snackbar.make(it, "Text entered cannot contain a '@'", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null)
+                        .show()
+                }
+                else {
+                    gamePost.listOfTextChats!!.add(message + "@" + currentUser.displayName + "@" + currentUser.uid)
+                    updateTexts(gamePost)
+                    chatAdapter.submitList(gamePost!!.listOfTextChats!!.toList())
+                    chatAdapter.notifyDataSetChanged()
+                    composeMessageET.text.clear()
+                }
+            }
+        }
+
     }
 
     private fun addAllText(gamePost: GamePost) {
@@ -109,6 +150,14 @@ class SpecificGameActivity : AppCompatActivity() {
             }
     }
 
+    private fun updateTexts(gamePost: GamePost) {
+        val gampostId = gamePost.rowId
+        db
+            .collection("gamePost").document(gampostId).update("listOfTextChats", gamePost.listOfTextChats)
+            .addOnSuccessListener { Log.d("XXX", "Updated list of Texts") }
+            .addOnFailureListener{e -> Log.d("XXX", "failedUpdatingListOfTexts")}
+}
+
     private fun updateAttendents(gamePost: GamePost) {
         val gampostId = gamePost.rowId
         db
@@ -120,10 +169,7 @@ class SpecificGameActivity : AppCompatActivity() {
             .collection("gamePost").document(gampostId).update("listOfAttendents", gamePost.listOfAttendents)
             .addOnSuccessListener { Log.d("XXX", "updateOfPlayersSuccesful") }
             .addOnFailureListener{e -> Log.d("XXX", "failed updating num players going")}
-
         specificAttending.text = gamePost.numberOfPlayers.toString()
-
-
     }
 
     fun deleteGameRow(gamePost: GamePost){
@@ -141,5 +187,13 @@ class SpecificGameActivity : AppCompatActivity() {
                 //
                 finish()
             }
+    }
+
+    private fun initRecyclerView(gamePost: GamePost) {
+        recyclerViewForChat.apply {
+            layoutManager = LinearLayoutManager(this@SpecificGameActivity)
+            chatAdapter = chatAdapter()
+            adapter = chatAdapter
+        }
     }
 }

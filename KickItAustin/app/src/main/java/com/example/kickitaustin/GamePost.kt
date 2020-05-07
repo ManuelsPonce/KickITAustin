@@ -15,8 +15,8 @@ data class GamePost (
 
     //firebase stuff
     var rowId: String = "",
-    var ownerUid: String? = null
+    var ownerUid: String? = null,
+    var listOfTextChats: MutableList<String>? = null
    // @ServerTimestamp val timeStamp: Timestamp? = null
     ) : Serializable{
-
 }
